@@ -7,7 +7,8 @@ output: github_document
 
 ###### **Note:** It is compatible with Seurat v.4.0.4.
 
-###### **Revision Strategy:** Seurat objects "oe_epi_suerat" and "wt_epi_cns9_seurat" present in environment generated from "final_pou4_analysis_pipeline.Rmd" were loaded into this new environment, updated and then manipulated by this script.
+###### **Revision Strategy:** Seurat objects "oe_epi_suerat" and "wt_epi_cns9_seurat" present in environment generated from "final_pou4_analysis_pipeline.Rmd" were loaded into a new environment, updated and then manipulated by this script.
+[Insert Link to Object]
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -22,13 +23,6 @@ library(ggplot2)
 ```
 
 #### **Update Seurat objects from v2 to v3.**
-#### First load objects.
-```{r include=TRUE}
-file_path = "/Users/prakritipaul/Git/Pou4_Misexpression/pou4_revision_code_relevant_objects/"
-oe_epi_seurat <- readRDS(paste0(file_path, "oe_epi_seurat.rds"))
-wt_epi_cns9_seurat <- readRDS(paste0(file_path, "wt_epi_cns9_seurat.rds"))
-```
-
 ```{r include=FALSE}
 updated_oe_epi_seurat <- UpdateSeuratObject(oe_epi_seurat)
 updated_wt_epi_cns9_seurat <- UpdateSeuratObject(wt_epi_cns9_seurat)

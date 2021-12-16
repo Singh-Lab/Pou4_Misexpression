@@ -36,3 +36,7 @@ Their contents are described in individual README files.
 ### Files 
 
 **"ANISEED-Cirobu-GeneName-3bestBlastHitHuman.rnames"** contains khids and their human orthologs (compiled from the Aniseed Database). This file was kindly provided by Christelle Dantec of the Lemaire Lab, Institute of Biological Sciences, French National Centre for Scientific Research.
+
+### TO DO
+1. Provide Links to Robjects in revision code.
+2. Provide GEO Accession data.
