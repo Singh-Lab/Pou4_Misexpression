@@ -4,7 +4,8 @@
 Note: Data can be downloaded from **(Insert Link here)** 
 
 ### Code
-**(1) "final_pou4_analysis.pipeline.Rmd"**
+Is present in "original_rmarkdowns" directory.
+**1. "final_pou4_analysis.pipeline.Rmd"**
 Routine: 
 - Identifies all relevant WT and OE Epidermal Cell Types.
 - Calculates Differentially Expressed Genes (DEGs) for each.
@@ -16,19 +17,21 @@ Routine:
 
 **Note:** When this project started, this code was written to be compatible with Seurat version 2.3.4.
 
-**(2) "final_pou4_revision_code.Rmd"**
+**2. "final_pou4_revision_code.Rmd"**
 - Contains additional supplemental code for new visualizations and analyses.
 
 **Note:** When manuscript was under revision, code was written to be compatible with Seurat version 4.0.4. in order to accomodate certain visualization suggestions, namely the projection of OE subclusters using UMAP instead of TSNE embeddings (Fig 2c).
 
-### "pou4_data" directory
-Only contains the raw CellRanger Count Files "matrix.mtx", "barcodes.tsv" and "genes.tsv", the necessary inputs to perform the subsequent analyses. 
-Rest of raw and processed data can be accessed from [Insert GEO Link]
+### Analysis Output Directories:
+1. "DEGs"
+2. "LM_inputs" 
+3. "OE_DEG_Analysis"
+4. "MEME_TOMTOM" 
+Their contents are described in individual README files. 
 
-### "pou4_revision_code_relevant_objects" directory
-Contains "oe_epi_seurat" and "wt_epi_cns9_seurat" Seurat objects that are used in "final_pou4_revision_code.Rmd" 
-
-### Contents of subdirectories "DEGs", "LM_inputs", "OE_DEG_Analysis", and "MEME_TOMTOM" are described in individual README files. 
+### Respective directories containing images for knitted markdown files:
+1. "final_pou4_analysis_pipeline_files"
+2. "final_pou4_revision_code_files"
 
 ### Files 
 
