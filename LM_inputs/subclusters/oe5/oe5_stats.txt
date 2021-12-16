@@ -1,0 +1,33 @@
+avg_btn_aaten_delta =
+
+    0.1717
+
+
+avg_btn_cesn_delta =
+
+   -0.2407
+
+
+avg_btn_psc_delta =
+
+    0.1689
+
+
+aaten_mean =
+
+    0.0200
+
+
+btn_mean =
+
+    0.1917
+
+
+cesn_mean =
+
+    0.4324
+
+
+psc_mean =
+
+    0.0228
