@@ -5,7 +5,7 @@ Final Pou4 Revision Code
 
 ###### **Note:** It is compatible with Seurat v.4.0.4.
 
-###### **Revision Strategy:** Seurat objects “oe\_epi\_suerat” and “wt\_epi\_cns9\_seurat” present in environment generated from “final\_pou4\_analysis\_pipeline.Rmd” were loaded into this new environment, updated and then manipulated by this script.
+###### **Revision Strategy:** Seurat objects “oe\_epi\_suerat” and “wt\_epi\_cns9\_seurat” present in environment generated from “final\_pou4\_analysis\_pipeline.Rmd” were loaded into a new environment, updated and then manipulated by this script. Urls to these objects are provided below.
 
 ``` r
 library(Seurat)
@@ -17,12 +17,16 @@ library(ggplot2)
 
 #### **Update Seurat objects from v2 to v3.**
 
-#### First load objects.
+##### First load objects.
 
 ``` r
-file_path = "/Users/prakritipaul/Git/Pou4_Misexpression/pou4_revision_code_relevant_objects/"
-oe_epi_seurat <- readRDS(paste0(file_path, "oe_epi_seurat.rds"))
-wt_epi_cns9_seurat <- readRDS(paste0(file_path, "wt_epi_cns9_seurat.rds"))
+oe_epi_seurat_url <- "https://relevant-pou4-data.s3.us-east-2.amazonaws.com/pou4_revision_code_relevant_objects/oe_epi_seurat.rds"
+download.file(oe_epi_seurat_url, "oe_epi_seurat.rds")
+oe_epi_seurat <- readRDS("oe_epi_seurat.rds")
+
+wt_epi_cns9_seurat_url <- "https://relevant-pou4-data.s3.us-east-2.amazonaws.com/pou4_revision_code_relevant_objects/wt_epi_cns9_seurat.rds"
+download.file(wt_epi_cns9_seurat_url, "wt_epi_cns9_seurat.rds")
+wt_epi_cns9_seurat <- readRDS("wt_epi_cns9_seurat.rds")
 ```
 
 #### **Revision 1:** Figure 2c.

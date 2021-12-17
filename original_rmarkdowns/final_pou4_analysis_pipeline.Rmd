@@ -15,7 +15,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 * This code is compatible with Seurat version 2.3.4.
 * Additional supplemental code for new visualizations and analyses is present in "final_pou4_revision_code.Rmd" and is compatible with Seurat version 4.0.4.
-* As mentioned in "Materials and Methods" section, OE Cell refers to a cell in POU IV-misexpressed epidermis (ME). OE and ME are used interchangeably, and all code/lists use OE nomenclature. 
+* As mentioned in "Materials and Methods" section, OE Cell refers to a cell in POU IV-misexpressed epidermis (ME). OE and ME are used interchangeably, and all code/lists use OE nomenclature.
+* "agg_data_dir_url" contains a link to directory "pou4_data" that only contains the raw CellRanger Count Files "matrix.mtx", "barcodes.tsv" and "genes.tsv"- the necessary inputs for the subsequent analyses. 
 * Raw and processed data can be accessed from [Insert GEO Link]
 * Note: "agg" refers to the fact that this single-cell data contains cells from both WT and POU IV-misexpressed embryos.
 
