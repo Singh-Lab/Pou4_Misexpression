@@ -7,7 +7,8 @@ output: github_document
 
 ###### **Note:** It is compatible with Seurat v.4.0.4.
 
-###### **Revision Strategy:** Seurat objects "oe_epi_suerat" and "wt_epi_cns9_seurat" present in environment generated from "final_pou4_analysis_pipeline.Rmd" were loaded into a new environment, updated and then manipulated by this script. Urls to these objects are provided below.
+###### **Revision Strategy:** 
+Version 2 Seurat objects "oe_epi_suerat" and "wt_epi_cns9_seurat" were generated from running "final_pou4_analysis_pipeline.Rmd". They have Amazon S3 object URLs. They are loaded into a new environment using these URLs, updated to version 4 Seurat objects and manipulated in this script.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
