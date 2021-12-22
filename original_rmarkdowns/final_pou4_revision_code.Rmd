@@ -25,12 +25,12 @@ library(ggplot2)
 ##### First load objects.
 ```{r include=TRUE}
 oe_epi_seurat_url <- "https://relevant-pou4-data.s3.us-east-2.amazonaws.com/pou4_revision_code_relevant_objects/oe_epi_seurat.rds"
-download.file(oe_epi_seurat_url, "oe_epi_seurat.rds")
-oe_epi_seurat <- readRDS("oe_epi_seurat.rds")
+download.file(oe_epi_seurat_url, destfile = "/tmp/oe_epi_seurat.rds")
+oe_epi_seurat <- readRDS("/tmp/oe_epi_seurat.rds")
 
 wt_epi_cns9_seurat_url <- "https://relevant-pou4-data.s3.us-east-2.amazonaws.com/pou4_revision_code_relevant_objects/wt_epi_cns9_seurat.rds"
-download.file(wt_epi_cns9_seurat_url, "wt_epi_cns9_seurat.rds")
-wt_epi_cns9_seurat <- readRDS("wt_epi_cns9_seurat.rds")
+download.file(wt_epi_cns9_seurat_url, "/tmp/wt_epi_cns9_seurat.rds")
+wt_epi_cns9_seurat <- readRDS("/tmp/wt_epi_cns9_seurat.rds")
 ```
 
 ```{r include=FALSE}

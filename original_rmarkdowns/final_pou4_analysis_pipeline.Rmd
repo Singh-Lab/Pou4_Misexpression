@@ -14,10 +14,10 @@ knitr::opts_chunk$set(echo = TRUE)
 > Notes
 
 * This code is compatible with Seurat version 2.3.4.
-* Additional supplemental code for new visualizations and analyses is present in "final_pou4_revision_code.Rmd" and is compatible with Seurat version 4.0.4.
+* Additional supplemental code for new visualizations and analyses is present in "final_pou4_revision_code.Rmd", which is compatible with Seurat version 4.0.4.
 * As mentioned in "Materials and Methods" section, OE Cell refers to a cell in POU IV-misexpressed epidermis (ME). OE and ME are used interchangeably, and all code/lists use OE nomenclature.
-* "agg_data_dir_url" contains a link to directory "pou4_data" that only contains the raw CellRanger Count Files "matrix.mtx", "barcodes.tsv" and "genes.tsv"- the necessary inputs for the subsequent analyses. 
-* Raw and processed data can be accessed from [Insert GEO Link]
+* "agg_data_dir_url" contains a link to directory "pou4_OE" that contains aggregate data files from control and POU IV-misexpressed embryos.
+* Raw and processed data can be accessed from GEO Link provided in main README.
 * Note: "agg" refers to the fact that this single-cell data contains cells from both WT and POU IV-misexpressed embryos.
 
 ```{r include=TRUE}
@@ -29,9 +29,20 @@ library(Matrix)
 library(ggplot2)
 ```
 
+##### For the purpose of knitting this markdown, a local copy of the directory was used below.
 ```{r include=TRUE}
-# For the purpose of knitting this markdown, a local copy of the directory was used below.
 agg_data_dir <- "/Volumes/GoogleDrive/My Drive/Levine Lab/Pou4_Paper/revisions/revised_PNAS/pou4_OE_data/raw_gene_bc_matrices_mex/ci_kh_ghostdb_mchsv40_cfpsv40"
+```
+
+##### Otherwise, use this to run code.
+```{r include=TRUE}
+# # Get zip file from Amazon AWS.
+# agg_data_dir_url <- "https://relevant-pou4-data.s3.us-east-2.amazonaws.com/pou4_OE.zip"
+# # Download in /tmp.
+# download.file(agg_data_dir_url, destfile = "/tmp/pou4_OE.zip")
+# unzip("/tmp/pou4_OE.zip", exdir = "/tmp")
+# # Directory for use in downstream analyses.
+# agg_data_dir = "/tmp/pou4_OE/outs/raw_gene_bc_matrices_mex/ci_kh_ghostdb_mchsv40_cfpsv40"
 ```
 
 ##### Relevant Markers.

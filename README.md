@@ -33,6 +33,17 @@ Their contents are described in individual README files.
 1. "final_pou4_analysis_pipeline_files"
 2. "final_pou4_revision_code_files"
 
+### Data
+- Complete Data (raw and processed) for Control and Pou4 Misexpressed embryos is available with GEO Accession Number: *INSERT NUMBER HERE*
+- pou4_OE directory
+	* This data was aggregated using the cellranger aggr function and csv file "pou4_agg.csv", which is also present in this directory.
+	* Note: cellranger version 3.1.0 was used.
+	```
+	cellranger aggr --id=pou4_OE --csv=pou4_agg.csv
+	```	   
+	* All analyses were conducted using files in this directory.
+	* Link is provided in "original_rmarkdowns/final_pou4_analysis.pipeline.Rmd"
+
 ### Files 
 
 **"ANISEED-Cirobu-GeneName-3bestBlastHitHuman.rnames"** contains khids and their human orthologs (compiled from the Aniseed Database). This file was kindly provided by Christelle Dantec of the Lemaire Lab, Institute of Biological Sciences, French National Centre for Scientific Research.
