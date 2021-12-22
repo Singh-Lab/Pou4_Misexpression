@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 * This code is compatible with Seurat version 2.3.4.
 * Additional supplemental code for new visualizations and analyses is present in "final_pou4_revision_code.Rmd", which is compatible with Seurat version 4.0.4.
 * As mentioned in "Materials and Methods" section, OE Cell refers to a cell in POU IV-misexpressed epidermis (ME). OE and ME are used interchangeably, and all code/lists use OE nomenclature.
-* "agg_data_dir_url" contains a link to directory "pou4_OE" that contains aggregate data files from control and POU IV-misexpressed embryos.
+* "agg_data_dir_url" contains an object URL to zipped directory "pou4_OE" that contains aggregate data files from control and POU IV-misexpressed embryos. This zipped file is present in an Amazon S3 bucket.
 * Raw and processed data can be accessed from GEO Link provided in main README.
 * Note: "agg" refers to the fact that this single-cell data contains cells from both WT and POU IV-misexpressed embryos.
 
@@ -28,21 +28,15 @@ library(dplyr)
 library(Matrix)
 library(ggplot2)
 ```
-
-##### For the purpose of knitting this markdown, a local copy of the directory was used below.
+### Retrieve agg_data_dir from an Amazon S3 bucket. 
 ```{r include=TRUE}
-agg_data_dir <- "/Volumes/GoogleDrive/My Drive/Levine Lab/Pou4_Paper/revisions/revised_PNAS/pou4_OE_data/raw_gene_bc_matrices_mex/ci_kh_ghostdb_mchsv40_cfpsv40"
-```
-
-##### Otherwise, use this to run code.
-```{r include=TRUE}
-# # Get zip file from Amazon AWS.
-# agg_data_dir_url <- "https://relevant-pou4-data.s3.us-east-2.amazonaws.com/pou4_OE.zip"
-# # Download in /tmp.
-# download.file(agg_data_dir_url, destfile = "/tmp/pou4_OE.zip")
-# unzip("/tmp/pou4_OE.zip", exdir = "/tmp")
-# # Directory for use in downstream analyses.
-# agg_data_dir = "/tmp/pou4_OE/outs/raw_gene_bc_matrices_mex/ci_kh_ghostdb_mchsv40_cfpsv40"
+# Get zip file from Amazon AWS.
+agg_data_dir_url <- "https://relevant-pou4-data.s3.us-east-2.amazonaws.com/pou4_OE.zip"
+# Download in /tmp.
+download.file(agg_data_dir_url, destfile = "/tmp/pou4_OE.zip")
+unzip("/tmp/pou4_OE.zip", exdir = "/tmp")
+# Directory for use in downstream analyses.
+agg_data_dir = "/tmp/pou4_OE/outs/raw_gene_bc_matrices_mex/ci_kh_ghostdb_mchsv40_cfpsv40"
 ```
 
 ##### Relevant Markers.
@@ -101,43 +95,18 @@ agg_seurat <- FindClusters(object = agg_seurat,
 TSNEPlot(agg_seurat, do.label = TRUE)
 ```
 
-##### Helper Function to get WT (-2) and OE (-1) cell names 
-```{r include=TRUE}
-substrRight <- function(x, n) {
-  # Get 2nd to last character in a string.
-  substr(x, nchar(x)-n+1, nchar(x))
-}
-
-get_combo_cells <- function(all_cells) {
-  # Gets all cells with identity 1 (barcode = 1). These correspond to OE cells.
-  # Args:
-  #   all_cells: all cell names present in agg_seurat.
-  #
-  # Returns:
-  #   oe_cells: names of cells from POU IV-misexpressed embryos.
-  #
-  # e.g. "ACTGAGTTCTGGTGTA-2" is a WT cell.
-  #      "ACTGAGTTCTGGTGTA-1" is an OE cell. 
-  oe_cells <- c()
-  for (i in 1:length(all_cells)){
-    barcode <- all_cells[i]
-    substr <- substrRight(barcode, 2)
-    if ("-1" == substr) {
-      oe_cells <- c(oe_cells, barcode)
-    }
-  }
-  return(oe_cells)
-}
-```
-
 #### Get names of WT and OE Cells.
 ```{r include=TRUE}
 # 7799 
 all_cells <- agg_seurat@cell.names
+# OE cells have barcode with "-1". e.g. ACTGAGTTCTGGTGTA-1".
 # 3884
-oe_cells <- get_combo_cells(all_cells)
+oe_cells_logic <- grepl("-1", all_cells)
+oe_cells <- all_cells[oe_cells_logic]
+# WT cells have barcode with "-2". e.g. "ACTGAGTTCTGGTGTA-2"
 # 3915
-wt_cells <- setdiff(all_cells, oe_cells)
+wt_cells_logic <- grepl("-2", all_cells)
+wt_cells <- all_cells[wt_cells_logic]
 ```
 
 ### (2) Get epi and cns9 clusters from wt_seurat object.
@@ -840,7 +809,7 @@ av_all_wt_t <- t(av_all_wt)
 ```{r include=TRUE}
 # This files contain khids and their respective human orthologs, according to
 # annotations by Aniseed Database.
-khid_to_human <- read.table("ANISEED-Cirobu-GeneName-3bestBlastHitHuman.rnames",
+khid_to_human <- read.table("../ANISEED-Cirobu-GeneName-3bestBlastHitHuman.rnames",
                             sep = "\t",
                             header = TRUE,
                             stringsAsFactors = FALSE)
@@ -848,7 +817,7 @@ khid_to_human <- read.table("ANISEED-Cirobu-GeneName-3bestBlastHitHuman.rnames",
 
 #### Import OE DEGs list (same as DEGs in "putative_OE_EPI_degs" variable).
 ```{r include=TRUE}
-oe_degs <- read.table("DEGs/OE_EPI_degs.csv",
+oe_degs <- read.table("../DEGs/OE_EPI_degs.csv",
                       sep = ",",
                       header = FALSE,
                       stringsAsFactors = FALSE)

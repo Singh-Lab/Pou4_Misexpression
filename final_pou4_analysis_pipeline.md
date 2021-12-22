@@ -10,9 +10,10 @@ Final Pou4 Misexpression Analysis Pipeline
 > Notes
 
 -   This code is compatible with Seurat version 2.3.4.
--   Additional supplemental code for new visualizations and analyses is present in "final\_pou4\_revision\_code.Rmd" and is compatible with Seurat version 4.0.4.
+-   Additional supplemental code for new visualizations and analyses is present in "final\_pou4\_revision\_code.Rmd", which is compatible with Seurat version 4.0.4.
 -   As mentioned in "Materials and Methods" section, OE Cell refers to a cell in POU IV-misexpressed epidermis (ME). OE and ME are used interchangeably, and all code/lists use OE nomenclature.
--   Raw and processed data can be accessed from \[Insert GEO Link\]
+-   "agg\_data\_dir\_url" contains an object URL to zipped directory "pou4\_OE" that contains aggregate data files from control and POU IV-misexpressed embryos. This zipped file is present in an Amazon S3 bucket.
+-   Raw and processed data can be accessed from GEO Link provided in main README.
 -   Note: "agg" refers to the fact that this single-cell data contains cells from both WT and POU IV-misexpressed embryos.
 
 ``` r
@@ -59,9 +60,16 @@ library(Matrix)
 library(ggplot2)
 ```
 
+### Retrieve agg\_data\_dir from an Amazon S3 bucket.
+
 ``` r
-# For the purpose of knitting this markdown, a local copy of the directory was used below.
-agg_data_dir <- "/Volumes/GoogleDrive/My Drive/Levine Lab/Pou4_Paper/revisions/revised_PNAS/pou4_OE_data/raw_gene_bc_matrices_mex/ci_kh_ghostdb_mchsv40_cfpsv40"
+# Get zip file from Amazon AWS.
+agg_data_dir_url <- "https://relevant-pou4-data.s3.us-east-2.amazonaws.com/pou4_OE.zip"
+# Download in /tmp.
+download.file(agg_data_dir_url, destfile = "/tmp/pou4_OE.zip")
+unzip("/tmp/pou4_OE.zip", exdir = "/tmp")
+# Directory for use in downstream analyses.
+agg_data_dir = "/tmp/pou4_OE/outs/raw_gene_bc_matrices_mex/ci_kh_ghostdb_mchsv40_cfpsv40"
 ```
 
 ##### Relevant Markers.
@@ -129,45 +137,19 @@ TSNEPlot(agg_seurat, do.label = TRUE)
 
 ![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
-##### Helper Function to get WT (-2) and OE (-1) cell names
-
-``` r
-substrRight <- function(x, n) {
-  # Get 2nd to last character in a string.
-  substr(x, nchar(x)-n+1, nchar(x))
-}
-
-get_combo_cells <- function(all_cells) {
-  # Gets all cells with identity 1 (barcode = 1). These correspond to OE cells.
-  # Args:
-  #   all_cells: all cell names present in agg_seurat.
-  #
-  # Returns:
-  #   oe_cells: names of cells from POU IV-misexpressed embryos.
-  #
-  # e.g. "ACTGAGTTCTGGTGTA-2" is a WT cell.
-  #      "ACTGAGTTCTGGTGTA-1" is an OE cell. 
-  oe_cells <- c()
-  for (i in 1:length(all_cells)){
-    barcode <- all_cells[i]
-    substr <- substrRight(barcode, 2)
-    if ("-1" == substr) {
-      oe_cells <- c(oe_cells, barcode)
-    }
-  }
-  return(oe_cells)
-}
-```
-
 #### Get names of WT and OE Cells.
 
 ``` r
 # 7799 
 all_cells <- agg_seurat@cell.names
+# OE cells have barcode with "-1". e.g. ACTGAGTTCTGGTGTA-1".
 # 3884
-oe_cells <- get_combo_cells(all_cells)
+oe_cells_logic <- grepl("-1", all_cells)
+oe_cells <- all_cells[oe_cells_logic]
+# WT cells have barcode with "-2". e.g. "ACTGAGTTCTGGTGTA-2"
 # 3915
-wt_cells <- setdiff(all_cells, oe_cells)
+wt_cells_logic <- grepl("-2", all_cells)
+wt_cells <- all_cells[wt_cells_logic]
 ```
 
 ### (2) Get epi and cns9 clusters from wt\_seurat object.
@@ -214,7 +196,7 @@ wt_seurat <- FindClusters(object = wt_seurat,
 TSNEPlot(wt_seurat, do.label = TRUE)
 ```
 
-![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-11-1.png)
+![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-10-1.png)
 
 #### WT Seurat: Identify Epi.
 
@@ -225,7 +207,7 @@ FeaturePlot(wt_seurat,
             no.legend = TRUE)
 ```
 
-![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-12-1.png)
+![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
 #### WT Seurat: Identify CNS.
 
@@ -236,7 +218,7 @@ FeaturePlot(wt_seurat,
             no.legend = FALSE)
 ```
 
-![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-13-1.png)
+![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-12-1.png)
 
 #### WT Seurat: Identify CNS cluster with BTN Markers.
 
@@ -247,7 +229,7 @@ FeaturePlot(wt_seurat,
             no.legend = FALSE)
 ```
 
-![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-14-1.png)
+![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
 #### WT Seurat: Get names of Epi and CNS cells.
 
@@ -307,7 +289,7 @@ wt_epi_cns9_seurat <- FindClusters(object = wt_epi_cns9_seurat,
 TSNEPlot(wt_epi_cns9_seurat)
 ```
 
-![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-19-1.png)
+![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-18-1.png)
 
 #### Visualize BTN Markers.
 
@@ -318,7 +300,7 @@ FeaturePlot(wt_epi_cns9_seurat,
             no.legend = FALSE)
 ```
 
-![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-20-1.png)
+![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-19-1.png)
 
 #### Identify BTNs.
 
@@ -525,7 +507,7 @@ oe_seurat <- FindClusters(object = oe_seurat,
 TSNEPlot(oe_seurat, do.label = TRUE)
 ```
 
-![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-31-1.png)
+![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-30-1.png)
 
 #### OE Seurat: Identify Epi.
 
@@ -537,7 +519,7 @@ FeaturePlot(oe_seurat,
             cols.use = c("lightgrey", "#6C3483"))
 ```
 
-![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-32-1.png)
+![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-31-1.png)
 
 #### OE Seurat: Get OE Epi cells.
 
@@ -592,7 +574,7 @@ oe_epi_seurat <- FindClusters(object = oe_epi_seurat,
 TSNEPlot(oe_epi_seurat, do.label = TRUE)
 ```
 
-![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-37-1.png)
+![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-36-1.png)
 
 #### **Get the cells from each OE subcluster.**
 
@@ -840,7 +822,7 @@ DoHeatmap(wt_seurat,
           title = "Heatmap")
 ```
 
-![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-51-1.png)
+![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-50-1.png)
 
 ``` r
 test <- DoHeatmap(wt_seurat, 
@@ -917,7 +899,7 @@ DoHeatmap(oe_seurat,
           title = "Heatmap")
 ```
 
-![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-53-1.png)
+![](final_pou4_analysis_pipeline_files/figure-markdown_github/unnamed-chunk-52-1.png)
 
 ### (9) Write out CESN cell IDs and gene lists.
 
@@ -1006,7 +988,7 @@ av_all_wt_t <- t(av_all_wt)
 ``` r
 # This files contain khids and their respective human orthologs, according to
 # annotations by Aniseed Database.
-khid_to_human <- read.table("ANISEED-Cirobu-GeneName-3bestBlastHitHuman.rnames",
+khid_to_human <- read.table("../ANISEED-Cirobu-GeneName-3bestBlastHitHuman.rnames",
                             sep = "\t",
                             header = TRUE,
                             stringsAsFactors = FALSE)
@@ -1015,7 +997,7 @@ khid_to_human <- read.table("ANISEED-Cirobu-GeneName-3bestBlastHitHuman.rnames",
 #### Import OE DEGs list (same as DEGs in "putative\_OE\_EPI\_degs" variable).
 
 ``` r
-oe_degs <- read.table("DEGs/OE_EPI_degs.csv",
+oe_degs <- read.table("../DEGs/OE_EPI_degs.csv",
                       sep = ",",
                       header = FALSE,
                       stringsAsFactors = FALSE)
