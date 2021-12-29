@@ -13,7 +13,7 @@ Final Pou4 Misexpression Analysis Pipeline
 -   Additional supplemental code for new visualizations and analyses is present in "final\_pou4\_revision\_code.Rmd", which is compatible with Seurat version 4.0.4.
 -   As mentioned in "Materials and Methods" section, OE Cell refers to a cell in POU IV-misexpressed epidermis (ME). OE and ME are used interchangeably, and all code/lists use OE nomenclature.
 -   "agg\_data\_dir\_url" contains an object URL to zipped directory "pou4\_OE" that contains aggregate data files from control and POU IV-misexpressed embryos. This zipped file is present in an Amazon S3 bucket.
--   Raw and processed data can be accessed from GEO Link provided in main README.
+-   Raw and processed data can be accessed from GEO Accession Number GSE192645.
 -   Note: "agg" refers to the fact that this single-cell data contains cells from both WT and POU IV-misexpressed embryos.
 
 ``` r

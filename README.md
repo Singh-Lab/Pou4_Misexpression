@@ -1,12 +1,13 @@
 # README
-##### This directory contains all relevant code and results used in "Novel Neuronal Identities Derived by Misexpression of the POU IV Sensory Determinant in a Proto-Vertebrate". Chacha et. al, PNAS 2022
+##### This directory contains all relevant code and results used in "Novel Neuronal Identities Derived by Misexpression of the POU IV Sensory Determinant in a Proto-Vertebrate". Chacha et. al, PNAS 2022.
 
-Note: Data can be downloaded from **(Insert Link here)** 
+
 
 ### Code
 Is present in "original_rmarkdowns" directory.
+All code was written by Prakriti Paul Chacha.
+
 **1. "final_pou4_analysis.pipeline.Rmd"**
-Routine: 
 - Identifies all relevant WT and OE Epidermal Cell Types.
 - Calculates Differentially Expressed Genes (DEGs) for each.
 - Creates two "Transcriptomic Profiles" (250 and 300, refer Methods).
@@ -34,7 +35,8 @@ Their contents are described in individual README files.
 2. "final_pou4_revision_code_files"
 
 ### Data
-- Processed data and raw fastq files for Control and Pou4 Misexpressed embryos is available with GEO Accession Number: [*INSERT NUMBER HERE*]
+- Complete Data (raw and processed) for Control and Pou4 Misexpressed embryos is available using GEO Accession Number GSE192645.
+  Please quote in any manuscript discussing the data.
 - pou4_OE directory
 	* Raw data from both embryos (not provided in GEO) was aggregated using the cellranger aggr function and csv file "pou4_agg.csv", which is also present in this directory.
 	* Note: cellranger version 3.1.0 was used.
@@ -47,6 +49,3 @@ Their contents are described in individual README files.
 ### Files 
 
 **"ANISEED-Cirobu-GeneName-3bestBlastHitHuman.rnames"** contains khids and their human orthologs (compiled from the Aniseed Database). This file was kindly provided by Christelle Dantec of the Lemaire Lab, Institute of Biological Sciences, French National Centre for Scientific Research.
-
-### TO DO
-2. Provide GEO Accession data.
