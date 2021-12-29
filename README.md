@@ -1,7 +1,7 @@
 # README
-##### This directory contains all relevant code and results used in "Novel Neuronal Identities Derived by Misexpression of the POU IV Sensory Determinant in a Proto-Vertebrate". Chacha et. al, PNAS 2022.
+#### This directory contains all relevant code and results used in "Novel Neuronal Identities Derived by Misexpression of the POU IV Sensory Determinant in a Proto-Vertebrate". Chacha et al., PNAS 2021.
 
-
+![POU IV Misexpression](https://relevant-pou4-data.s3.us-east-2.amazonaws.com/fig5.png)
 
 ### Code
 Is present in "original_rmarkdowns" directory.
@@ -21,7 +21,7 @@ All code was written by Prakriti Paul Chacha.
 **2. "final_pou4_revision_code.Rmd"**
 - Contains additional supplemental code for new visualizations and analyses.
 
-**Note:** When manuscript was under revision, code was written to be compatible with Seurat version 4.0.4. in order to accomodate certain visualization suggestions, namely the projection of OE subclusters using UMAP instead of TSNE embeddings (Fig 2c).
+**Note:** When manuscript was under revision, code was written to be compatible with Seurat version 4.0.4. in order to accommodate certain visualization suggestions, namely the projection of OE subclusters using UMAP instead of TSNE embeddings (Fig 2c).
 
 ### Analysis Output Directories:
 1. "DEGs"
