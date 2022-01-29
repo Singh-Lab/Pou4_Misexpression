@@ -1,5 +1,5 @@
 # README
-#### This directory contains all relevant code and results used in "Novel Neuronal Identities Derived by Misexpression of the POU IV Sensory Determinant in a Proto-Vertebrate". Chacha et al., PNAS 2021.
+#### This directory contains all relevant code and results used in "Neuronal Identities Derived by Misexpression of the POU IV Sensory Determinant in a Proto-Vertebrate". Chacha et al., PNAS 2022.
 
 ![POU IV Misexpression](https://relevant-pou4-data.s3.us-east-2.amazonaws.com/fig5.png)
 
